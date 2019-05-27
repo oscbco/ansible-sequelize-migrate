@@ -1,3 +1,12 @@
+- name: APP Execute down migrations
+  command: "node ./node_modules/sequelize-cli/lib/sequelize db:migrate:undo:all"
+  args:
+    chdir: "{{ appdir }}"
+  when: down is defined
+  become: yes
+  become_user: "{{ userdba }}"
+  become_method: sudo
+
 - name: APP Execute migrations
   command: "node ./node_modules/sequelize-cli/lib/sequelize db:migrate"
   args:
